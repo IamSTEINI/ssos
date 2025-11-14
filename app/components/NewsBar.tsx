@@ -6,7 +6,7 @@ interface NewsProps {
 
 const NewsBar: React.FC<NewsProps> = ({ children }) => {
 	return (
-		<marquee className="w-full h-10 border-b">
+		<marquee className="w-full h-fit border-b">
 			<div className="flex flex-row">{children}</div>
 		</marquee>
 	);
