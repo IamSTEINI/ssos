@@ -11,47 +11,75 @@
 }
 
 :root {
-  --background: #000000;
-  --main-color: #FFDF9B;
-	--accent-color: #FF9B9B;
-	--inverse-color: #518EE2;
-	--positive-color: #61DE61;
-	--negative-color: #FF9B9B;
+	--background: #000000;
+	--main-color: #ffdf9b;
+	--accent-color: #ff9b9b;
+	--inverse-color: #518ee2;
+	--positive-color: #61de61;
+	--negative-color: #ff9b9b;
 }
 
 ::selection {
-  background-color: white;
+	background-color: white;
 }
 
 body {
-  background: var(--background);
+	background: var(--background);
 }
 
 * {
-  color: var(--main-color);
-  font-family: "Heading", sans-serif;
+	color: var(--main-color);
+	font-family: "Heading", sans-serif;
 }
 p {
-  font-family: "Paragraph", sans-serif;
+	font-family: "Paragraph", sans-serif;
 }
 
 .main-color {
-    color: var(--main-color);
-    border-color: var(--main-color);
+	color: var(--main-color);
+	border-color: var(--main-color);
 }
 .accent-color {
-    color: var(--accent-color);
-    border-color: var(--accent-color);
+	color: var(--accent-color);
+	border-color: var(--accent-color);
 }
 .inverse-color {
-    color: var(--inverse-color);
-    border-color: var(--inverse-color);
+	color: var(--inverse-color);
+	border-color: var(--inverse-color);
 }
 .positive-color {
-    color: var(--positive-color);
-    border-color: var(--positive-color);
+	color: var(--positive-color);
+	border-color: var(--positive-color);
 }
 .negative-color {
-    color: var(--negative-color);
-    border-color: var(--negative-color);
+	color: var(--negative-color);
+	border-color: var(--negative-color);
+}
+
+.newsbar {
+	width: 100vw;
+	overflow: hidden;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.track {
+	display: flex;
+	gap: 1rem;
+	align-items: center;
+	white-space: nowrap;
+	transform: translateX(100%);
+	animation: scroll linear infinite;
+}
+
+.track > * {
+	flex: 0 0 auto;
+}
+
+@keyframes scroll {
+	from {
+		transform: translateX(100%);
+	}
+	to {
+		transform: translateX(-100%);
+	}
 }

@@ -1,11 +1,11 @@
 import React from "react";
-import Section from "./components/Section.tsx";
-import NewsBar from "./components/NewsBar.tsx";
+import Section from "./components/Section";
+import NewsBar from "./components/NewsBar";
 
 const WelcomePage: React.FC = () => {
 	return (
 		<div className="w-screen flex flex-col items-center">
-			<NewsBar>
+			<NewsBar s={25}>
 				<p className="px-5">ABC</p>
 				<p className="px-5">ABC</p>
 				<p className="px-5">ABC</p>
