@@ -1,85 +1,203 @@
 @import "tailwindcss";
 
 @font-face {
-	font-family: "Paragraph";
-	src: url("./res/paragraph.ttf");
+    font-family: "Paragraph";
+    src: url("./res/paragraph.ttf");
 }
 
 @font-face {
-	font-family: "Heading";
-	src: url("./res/heading.woff");
+    font-family: "Heading";
+    src: url("./res/heading.woff");
 }
 
 :root {
-	--background: #000000;
-	--main-color: #ffdf9b;
-	--accent-color: #ff9b9b;
-	--inverse-color: #518ee2;
-	--positive-color: #61de61;
-	--negative-color: #ff9b9b;
+    --background: #000000;
+    --main-color: #ffdf9b;
+    --accent-color: #ff9b9b;
+    --inverse-color: #518ee2;
+    --positive-color: #61de61;
+    --negative-color: #ff9b9b;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+html {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 ::selection {
-	background-color: white;
+    background-color: white;
+}
+
+.seperator {
+    width: 100%;
+    height: 32px;
+    background-image: url("./res/seperator.png");
+}
+
+.seperate {
+    width: 100%;
+    height: 32px;
+    background-image: url("./res/seperate.png");
 }
 
 body {
-	background: var(--background);
+    background: var(--background);
+}
+
+input {
+    outline: none;
+    background: transparent;
+    border: 1px solid var(--main-color);
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+button {
+    background: var(--main-color);
+    border: 1px solid var(--main-color);
+    color: var(--background);
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: transparent;
+    color: var(--main-color);
+    border: 1px solid var(--main-color);
 }
 
 * {
-	color: var(--main-color);
-	font-family: "Heading", sans-serif;
+    color: var(--main-color);
+    font-family: "Heading", sans-serif;
 }
-p {
-	font-family: "Paragraph", sans-serif;
+p,a {
+    font-family: "Paragraph", sans-serif;
+}
+
+a {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+a:hover {
+	color: var(--accent-color);
 }
 
 .main-color {
-	color: var(--main-color);
-	border-color: var(--main-color);
+    color: var(--main-color);
+    border-color: var(--main-color);
 }
 .accent-color {
-	color: var(--accent-color);
-	border-color: var(--accent-color);
+    color: var(--accent-color);
+    border-color: var(--accent-color);
 }
 .inverse-color {
-	color: var(--inverse-color);
-	border-color: var(--inverse-color);
+    color: var(--inverse-color);
+    border-color: var(--inverse-color);
 }
 .positive-color {
-	color: var(--positive-color);
-	border-color: var(--positive-color);
+    color: var(--positive-color);
+    border-color: var(--positive-color);
 }
 .negative-color {
-	color: var(--negative-color);
-	border-color: var(--negative-color);
+    color: var(--negative-color);
+    border-color: var(--negative-color);
+}
+
+mark {
+	background-color: var(--inverse-color);
+	padding: 5px;
 }
 
 .newsbar {
-	width: 100vw;
-	overflow: hidden;
-	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    width: 100vw;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    background-color: black;
+    padding: 0.5rem 0;
+    z-index: 50;
 }
 
 .track {
-	display: flex;
-	gap: 1rem;
-	align-items: center;
-	white-space: nowrap;
-	transform: translateX(100%);
-	animation: scroll linear infinite;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    white-space: nowrap;
+    transform: translateX(100%);
+    pointer-events: none;
+    animation: scroll linear infinite;
 }
 
 .track > * {
-	flex: 0 0 auto;
+    flex: 0 0 auto;
 }
 
 @keyframes scroll {
-	from {
-		transform: translateX(100%);
-	}
-	to {
-		transform: translateX(-100%);
-	}
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+.shear-section {
+    position: relative;
+    width: fit-content;
+    margin-left: 50px;
+    border: 1px solid var(--inverse-color);
+    border-top: 0;
+    border-bottom: 0;
+    margin-top: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.shear-section:before {
+    content: " ";
+    position: absolute;
+    display: block;
+    width: calc(100% + 2px);
+    height: 50%;
+    left: -1px;
+    top: -20px;
+    z-index: -1;
+    border: 1px solid var(--inverse-color);
+    border-bottom: 0;
+    transform-origin: bottom left;
+    transform: skew(0deg, -3deg);
+}
+
+.shear-section:after {
+    content: " ";
+    position: absolute;
+    display: block;
+    width: calc(100% + 2px);
+    height: 50%;
+    rotate: 180deg;
+    left: -1px;
+    bottom: -50px;
+    z-index: -1;
+    border: 1px solid var(--inverse-color);
+    border-top: 0;
+    transform-origin: top left;
+    transform: skew(0deg, -3deg);
+}
+
+@keyframes sparkle {
+    0%,
+    100% {
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 1;
+    }
 }
