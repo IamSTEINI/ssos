@@ -27,7 +27,7 @@ const WelcomePage = async () => {
                         [DEATH] Astronaut #32 was pronounced death
                     </p>
                 </NewsBar>
-                <h1 className="font-black italic text-[120px] mt-[700px]">
+                <h1 className="font-black italic text-[120px] mt-[350px]">
                     SSOS
                 </h1>
                 <span>SIEGE SPACE OS v3.2</span>
