@@ -9,7 +9,7 @@ const AuthForm = () => {
     return (
         <Section color="inverse-color">
             <h1 className="inverse-color text-3xl font-bold">
-                Welcome back, astronaut
+                Welcome back,astronaut
             </h1>
             <p>You can register here to gain access to the SSOS</p>
             <div className="flex flex-row items-center w-full">
