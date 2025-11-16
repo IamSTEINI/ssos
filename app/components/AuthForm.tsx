@@ -30,6 +30,7 @@ const AuthForm = () => {
             }
         } else {
             if (errorElement) {
+                alert("YOUR A-ID: "+data.astronautId)
                 errorElement.textContent =
                     "Success! Welcome back A#" +
                     data.astronautId +
@@ -40,6 +41,7 @@ const AuthForm = () => {
                     ).toString() +
                     ")";
                 await localStorage.setItem("astronaut_token", md5(data.astronautId + newPassword));
+                localStorage.setItem("cwd", "/home/"+data.astronautId)
                 if (localStorage.getItem("astronaut_token")) {
                     window.location.href = "/home";
                 }

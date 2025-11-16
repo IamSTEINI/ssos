@@ -19,7 +19,7 @@ model File {
   id          Int      @id @default(autoincrement()) 
   path        String   @unique
   isFolder    Boolean  @default(false)
-  astronautId Int
-  astronaut   User     @relation(fields: [astronautId], references: [id])
+  astronautId String
+  astronaut   User     @relation(fields: [astronautId], references: [astronautId])
   createdAt   DateTime @default(now())
 }

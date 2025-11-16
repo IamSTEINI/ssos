@@ -29,6 +29,7 @@ export default function AuthCheck({ children }: AuthGuardProps) {
                 localStorage.removeItem("astronaut_token");
             } else {
                 localStorage.setItem("astronautId", data.astronautId)
+                localStorage.setItem("cwd", "home/"+data.astronautId)
                 setAuthenticated(true);
             }
         };

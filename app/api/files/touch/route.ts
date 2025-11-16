@@ -2,11 +2,12 @@ import { NextResponse } from "next/server";
 import { verifyToken } from "../../authGuard";
 import prisma from "@/lib/prisma";
 import { getUserByToken } from "../../tools";
+import { promises as fs } from "fs";
+import path from "path";
 
 export async function POST(req: Request) {
 	try {
-		const { token, folderName } = await req.json();
-
+		const { token, filePath, content } = await req.json();
 		if (!token) {
 			return NextResponse.json(
 				{ success: false, error: "No token" },
@@ -14,13 +15,12 @@ export async function POST(req: Request) {
 			);
 		}
 
-		if (!folderName) {
+		if (!filePath) {
 			return NextResponse.json(
-				{ success: false, error: "No folder name given" },
+				{ success: false, error: "No file path given" },
 				{ status: 400 }
 			);
 		}
-
 		const valid = await verifyToken(token);
 		if (!valid) {
 			return NextResponse.json(
@@ -37,17 +37,16 @@ export async function POST(req: Request) {
 			);
 		}
 
-		const normalized = folderName.trim();
-
+		const normalized = filePath.trim();
 		const sanitized = normalized
 			.toLowerCase()
-			.replace(/[^a-z0-9_.\/-]/g, "");
+			.replace(/[^a-z0-9_.\/\-]/g, "");
 
 		if (!sanitized || sanitized !== normalized.toLowerCase()) {
 			return NextResponse.json(
 				{
 					success: false,
-					error: "Folder name contains invalid characters or spaces",
+					error: "File path contains invalid character or spaces",
 				},
 				{ status: 400 }
 			);
@@ -56,7 +55,7 @@ export async function POST(req: Request) {
 		const requestedParts = sanitized.split("/").filter(Boolean);
 		if (requestedParts.length === 0) {
 			return NextResponse.json(
-				{ success: false, error: "Invalid folder name" },
+				{ success: false, error: "Invalid file name" },
 				{ status: 400 }
 			);
 		}
@@ -72,7 +71,7 @@ export async function POST(req: Request) {
 			return NextResponse.json(
 				{
 					success: false,
-					error: "Folder path contains duplicate segments",
+					error: "File path contains duplicate segment",
 				},
 				{ status: 400 }
 			);
@@ -84,12 +83,11 @@ export async function POST(req: Request) {
 				const existing = await prisma.file.findFirst({
 					where: { path: prefix, isFolder: true },
 				});
-
 				if (!existing) {
 					return NextResponse.json(
 						{
 							success: false,
-							error: `Parent folder \"${prefix}\" does not exist`,
+							error: `Parent folder "${prefix}" does not exist`,
 						},
 						{ status: 400 }
 					);
@@ -109,10 +107,10 @@ export async function POST(req: Request) {
 			);
 		}
 
-		const folder = await prisma.file.create({
+		const file = await prisma.file.create({
 			data: {
 				path: finalPath,
-				isFolder: true,
+				isFolder: false,
 				astronautId,
 			},
 			select: {
@@ -124,14 +122,36 @@ export async function POST(req: Request) {
 			},
 		});
 
-		if (!folder) {
+		if (!file) {
 			return NextResponse.json(
-				{ success: false, error: "Failed to create folder" },
+				{ success: false, error: "Failed to create file" },
 				{ status: 500 }
 			);
 		}
 
-		return NextResponse.json({ success: true, folder }, { status: 201 });
+		try {
+			const dataDir = path.join(process.cwd(), "data");
+			await fs.mkdir(dataDir, { recursive: true });
+			const storePath = path.join(dataDir, "file_cons.json");
+			let store: Record<string, string> = {};
+			try {
+				const txt = await fs.readFile(storePath, "utf-8");
+				store = JSON.parse(txt || "{}");
+			} catch (e) {
+				store = {};
+			}
+			store[finalPath] =
+				typeof content === "string" ? content : String(content || "");
+			await fs.writeFile(
+				storePath,
+				JSON.stringify(store, null, 2),
+				"utf-8"
+			);
+		} catch (err) {
+			console.error("failed to write content store", err);
+		}
+
+		return NextResponse.json({ success: true, file }, { status: 201 });
 	} catch (err) {
 		console.error(err);
 		return NextResponse.json(

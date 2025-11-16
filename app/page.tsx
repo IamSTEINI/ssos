@@ -1,5 +1,4 @@
 import React from "react";
-import Section from "./components/Section";
 import NewsBar from "./components/NewsBar";
 import prisma from "@/lib/prisma";
 import AuthForm from "./components/AuthForm";
