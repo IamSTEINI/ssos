@@ -4,7 +4,7 @@ import NewsBar from "./components/NewsBar";
 import prisma from "@/lib/prisma";
 import AuthForm from "./components/AuthForm";
 import Stars from "./components/Stars";
-import { GitCommitIcon, GithubIcon } from "lucide-react";
+import { GitCommitIcon} from "lucide-react";
 
 const WelcomePage = async () => {
     const user_amount = await prisma.user.count();

@@ -75,7 +75,7 @@ button:hover {
     color: var(--main-color);
     font-family: "Heading", sans-serif;
 }
-p,a {
+p,a ,li {
     font-family: "Paragraph", sans-serif;
 }
 
@@ -200,4 +200,8 @@ mark {
     50% {
         opacity: 1;
     }
+}
+
+.border-none {
+    border: none;
 }

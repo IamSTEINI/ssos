@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Section from "./Section";
-import calculate_astronaut_abbreviation from "@/lib/calcs";
+import calculate_astronaut_abbreviation, { md5 } from "@/lib/calcs";
 
 const AuthForm = () => {
     const [passwordHidden, setPasswordHidden] = useState(true);
@@ -39,6 +39,10 @@ const AuthForm = () => {
                         data.astronautId
                     ).toString() +
                     ")";
+                await localStorage.setItem("astronaut_token", md5(data.astronautId + newPassword));
+                if (localStorage.getItem("astronaut_token")) {
+                    window.location.href = "/home";
+                }
             }
         }
     };
@@ -77,7 +81,7 @@ const AuthForm = () => {
             {aId.length > 0 && password.length == 0 && (
                 <div className="flex flex-row items-center w-full">
                     <input
-                        type={passwordHidden ? "password" : "text"}
+                        type={newPasswordHidden ? "password" : "text"}
                         placeholder="Enter your password"
                         className="w-full"
                         value={newPassword}

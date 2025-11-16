@@ -11,5 +11,15 @@ model User {
   id          Int      @id @default(autoincrement())
   astronautId String   @unique
   password    String
+  files       File[]
+  createdAt   DateTime @default(now())
+}
+
+model File {
+  id          Int      @id @default(autoincrement()) 
+  path        String   @unique
+  isFolder    Boolean  @default(false)
+  astronautId Int
+  astronaut   User     @relation(fields: [astronautId], references: [id])
   createdAt   DateTime @default(now())
 }
